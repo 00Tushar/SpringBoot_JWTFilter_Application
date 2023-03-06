@@ -10,4 +10,14 @@ public class Customer {
     private String name;
     private String password;
     private String phoneNo;
+
+    public Customer(long id, String name, String password, String phoneNo) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.phoneNo = phoneNo;
+    }
+
+    public Customer() {
+    }
 }
