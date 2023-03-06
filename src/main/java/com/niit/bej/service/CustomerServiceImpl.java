@@ -7,6 +7,8 @@ import com.niit.bej.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
@@ -35,5 +37,14 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             return customerRepository.save(customer);
         }
+    }
+
+    @Override
+    public List<Customer> getAllCustomer() throws CustomerNotFoundException {
+        List<Customer> fetchCustomer = customerRepository.findAll();
+        if (fetchCustomer.isEmpty()) {
+            throw new CustomerNotFoundException("No Customer found");
+        }
+        return fetchCustomer;
     }
 }
