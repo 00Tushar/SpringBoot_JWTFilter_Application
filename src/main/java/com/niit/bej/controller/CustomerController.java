@@ -21,7 +21,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping("/customer/add")
+    @PostMapping("api/v1/customers/add")
     public ResponseEntity<?> register(@RequestBody Customer customer) {
         try {
             Customer customer1 = customerService.register(customer);
@@ -33,7 +33,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/customers")
+    @GetMapping("api/v1/customers")
     public ResponseEntity<?> getAllCustomers() {
         try {
 

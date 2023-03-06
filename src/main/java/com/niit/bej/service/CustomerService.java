@@ -13,4 +13,6 @@ public interface CustomerService {
     Customer register(Customer customer) throws CustomerAlreadyExistException;
 
     List<Customer> getAllCustomer() throws CustomerNotFoundException;
+
+    boolean deleteCustomer(Long id) throws CustomerNotFoundException;
 }
