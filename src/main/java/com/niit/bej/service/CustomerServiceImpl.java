@@ -1,6 +1,7 @@
 package com.niit.bej.service;
 
 import com.niit.bej.domain.Customer;
+import com.niit.bej.exception.CustomerNotFoundException;
 import com.niit.bej.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,14 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerRepository = customerRepository;
     }
 
+
     @Override
-    public Customer login(String name, String password) {
+    public Customer login(String name, String password) throws CustomerNotFoundException {
         Customer customer = customerRepository.findCustomerByNameAndPassword(name, password);
         if (customer != null) {
             return customer;
+        } else {
+            throw new CustomerNotFoundException("please check name and password");
         }
-        return null;
     }
 }
