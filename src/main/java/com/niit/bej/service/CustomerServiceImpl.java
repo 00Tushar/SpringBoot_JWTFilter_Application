@@ -16,6 +16,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer login(String name, String password) {
+        Customer customer = customerRepository.findCustomerByNameAndPassword(name, password);
+        if (customer != null) {
+            return customer;
+        }
         return null;
     }
 }
