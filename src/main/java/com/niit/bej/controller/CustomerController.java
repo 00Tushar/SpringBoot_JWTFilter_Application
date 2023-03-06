@@ -7,10 +7,7 @@ import com.niit.bej.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CustomerController {
@@ -55,6 +52,18 @@ public class CustomerController {
             e.printStackTrace();
             return new ResponseEntity<>("please check username and password", HttpStatus.NOT_FOUND);
         }
-
     }
+
+    @DeleteMapping("api/v1/customers/delete/{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(customerService.deleteCustomer(id), HttpStatus.ACCEPTED);
+        } catch (CustomerNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>("Customer Not Found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 }
