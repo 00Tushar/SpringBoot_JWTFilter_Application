@@ -3,6 +3,8 @@ package com.niit.bej.domain;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.util.Objects;
+
 @Document
 public class Customer {
     @MongoId
@@ -51,5 +53,18 @@ public class Customer {
 
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id && Objects.equals(name, customer.name) && Objects.equals(password, customer.password) && Objects.equals(phoneNo, customer.phoneNo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, password, phoneNo);
     }
 }
