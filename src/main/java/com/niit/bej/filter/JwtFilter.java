@@ -12,26 +12,30 @@ public class JwtFilter extends GenericFilterBean {
 
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
         ServletOutputStream outputStream = httpServletResponse.getOutputStream();
 
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) ;
-        {
-            String JwtToken = authorizationHeader.substring("Bearer ".length());
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            outputStream.println("Authorization Header is Missing!");
+            outputStream.close();
+        } else {
+            String jwtToken = authorizationHeader.substring("Bearer ".length());
             String username = Jwts.parser()
                     .setSigningKey("secretKey")
-                    .parseClaimsJws(JwtToken)
+                    .parseClaimsJws(jwtToken)
                     .getBody()
                     .getSubject();
             httpServletRequest.setAttribute("username", username);
         }
-        filterChain.doFilter(servletRequest, servletResponse);
 
+        chain.doFilter(request, response);
     }
+
 }

@@ -25,9 +25,9 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findCustomerByNameAndPassword(name, password);
         if (customer != null) {
             return customer;
-        } else {
-            throw new CustomerNotFoundException("please check name and password");
         }
+            throw new CustomerNotFoundException("please check name and password");
+
     }
 
     @Override
@@ -35,9 +35,9 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer1 = customerRepository.findCustomerByNameAndPassword(customer.getName(), customer.getPassword());
         if (customer1 != null) {
             throw new CustomerAlreadyExistException("Already Exist");
-        } else {
+        } else
             return customerRepository.save(customer);
-        }
+
     }
 
     @Override
