@@ -45,4 +45,16 @@ public class CustomerController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Customer customer) {
+        try {
+            Customer loggedCustomer = customerService.login(customer.getName(), customer.getPassword());
+            return new ResponseEntity<>(loggedCustomer, HttpStatus.ACCEPTED);
+        } catch (CustomerNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>("please check username and password", HttpStatus.NOT_FOUND);
+        }
+
+    }
 }
